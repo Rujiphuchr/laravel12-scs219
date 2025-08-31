@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\News;
+use Carbon\Carbon;
+
+class NewsController extends Controller
+{
+    /**
+     * Show the list of news articles.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $allNews = News::orderBy('created_at', 'desc')->get();
+        $latestNews = $allNews->shift();
+        $otherNews = $allNews;
+
+        return view('news', [
+            'latestNews' => $latestNews,
+            'otherNews' => $otherNews
+        ]);
+    }
+
+    /**
+     * Show the details of a specific news article.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $news = News::findOrFail($id);
+        $createdAt = Carbon::parse($news->created_at);
+        $now = Carbon::now();
+        $daysAgo = $createdAt->diffInDays($now);
+
+        return view('news-detail', [
+            'news' => $news,
+            'daysAgo' => $daysAgo
+        ]);
+    }
+}
