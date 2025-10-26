@@ -35,12 +35,16 @@
             @if ($latestNews)
                 <div class="mb-8 md:mb-12 group">
                     <div
-                        class="bg-white rounded-3xl shadow-2xl overflow-hidden md:flex md:items-center transition duration-500 hover:scale-[1.02] hover:shadow-orange-200">
+                        class="bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2 transition duration-500 hover:scale-[1.02] hover:shadow-orange-200">
 
-                        <img src="{{ $latestNews->image_url }}" alt="{{ $latestNews->title }}"
-                            class="w-full md:w-1/2 h-64 object-cover object-center transition duration-300 group-hover:opacity-80">
+                        <!-- ภาพฝั่งซ้ายเต็ม -->
+                        <a href="{{ route('news.detail', ['id' => $latestNews->id]) }}" class="block w-full h-full">
+                            <img src="{{ $latestNews->image_url }}" alt="{{ $latestNews->title }}"
+                                class="w-full h-full object-cover object-center transition duration-300 group-hover:opacity-80">
+                        </a>
 
-                        <div class="p-6 md:p-8 flex flex-col justify-between w-full md:w-1/2">
+                        <!-- ข้อความฝั่งขวา -->
+                        <div class="flex flex-col justify-between p-6 md:p-8">
                             <div>
                                 <span class="text-sm text-gray-500 font-medium flex items-center">
                                     <i class="fas fa-calendar-alt text-orange-400 mr-2"></i>
@@ -55,19 +59,21 @@
                             </div>
 
                             <!-- อ่านต่อ -->
-                            <div class="mt-4 flex items-center text-orange-600 font-bold">
-                                <span>อ่านต่อ</span>
-                                <i
-                                    class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                            <div class="mt-4">
+                                <a href="{{ route('news.detail', ['id' => $latestNews->id]) }}"
+                                    class="flex items-center text-orange-600 font-bold hover:underline">
+                                    <span>อ่านต่อ</span>
+                                    <i
+                                        class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </a>
                             </div>
 
-                            <!-- ปุ่มแก้ไข / ลบ อยู่ใต้ อ่านต่อ -->
+                            <!-- ปุ่มแก้ไข / ลบ -->
                             <div class="mt-4 flex justify-end gap-4 border-t pt-3">
                                 <a href="{{ route('news.edit', $latestNews->id) }}"
                                     class="text-blue-600 hover:text-blue-800 font-semibold">
                                     ✏️ แก้ไข
                                 </a>
-
                                 <form action="{{ route('news.destroy', $latestNews->id) }}" method="POST"
                                     onsubmit="return confirm('ยืนยันการลบข่าวนี้หรือไม่?')">
                                     @csrf
@@ -78,6 +84,7 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             @endif
@@ -111,12 +118,12 @@
                                         <i class="far fa-clock mr-1"></i>
                                         {{ \Carbon\Carbon::parse($news->created_at)->diffForHumans() }}
                                     </span>
-                                    <span
-                                        class="inline-flex items-center text-orange-600 font-semibold hover:text-orange-700">
-                                        อ่านต่อ
+                                    <a href="{{ route('news.detail', ['id' => $news->id]) }}"
+                                        class="flex items-center text-orange-600 font-bold hover:underline">
+                                        <span>อ่านต่อ</span>
                                         <i
-                                            class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
-                                    </span>
+                                            class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                    </a>
                                 </div>
 
                                 <!-- ปุ่มแก้ไข / ลบ -->

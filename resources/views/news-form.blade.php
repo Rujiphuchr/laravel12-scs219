@@ -24,6 +24,13 @@
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-orange-200">
             </div>
 
+            <!-- เพิ่มช่อง input แหล่งข่าว -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">แหล่งที่มาของข่าว (URL)</label>
+                <input type="text" name="source_url" value="{{ old('source_url', $news->source_url ?? '') }}"
+                    class="w-full border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-orange-200">
+            </div>
+
             <div class="mb-4">
                 <label class="block text-gray-700 font-semibold mb-2">เนื้อหาข่าว</label>
                 <textarea name="content" rows="5"
